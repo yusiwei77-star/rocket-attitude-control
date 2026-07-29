@@ -41,8 +41,7 @@ dist/
 /artifacts/demos/*
 !/artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4
 !/artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4
-!/artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif
-!/artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif
+!/artifacts/demos/a2c_2460000_seed0_synchronized_preview.gif
 /artifacts/results/*
 !/artifacts/results/a2c_2460000_seed0_summary.json
 !/artifacts/results/a2c_2460000_seed0_trajectory.npz

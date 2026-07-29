@@ -14,7 +14,7 @@ from rocket_attitude_control.rollout import (
 )
 from rocket_attitude_control.video import (
     PREVIEW_FPS,
-    render_gif_previews,
+    render_gif_preview,
     render_videos,
 )
 
@@ -43,9 +43,9 @@ def main() -> None:
         fps=args.fps,
         prefix=prefix,
     )
-    preview_paths = None
+    preview_path = None
     if not args.no_previews:
-        preview_paths = render_gif_previews(
+        preview_path = render_gif_preview(
             plot_path,
             rocket_path,
             fps=args.preview_fps,
@@ -65,13 +65,8 @@ def main() -> None:
     )
     write_json(metrics, result_dir / f"{prefix}_summary.json")
     outputs = {"plot_video": str(plot_path), "rocket_video": str(rocket_path)}
-    if preview_paths is not None:
-        outputs.update(
-            {
-                "plot_preview": str(preview_paths[0]),
-                "rocket_preview": str(preview_paths[1]),
-            }
-        )
+    if preview_path is not None:
+        outputs["synchronized_preview"] = str(preview_path)
     print(json.dumps({**outputs, **metrics}, indent=2))
 
 

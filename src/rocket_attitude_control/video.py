@@ -29,6 +29,10 @@ ROCKET_PREVIEW_SIZE = (
     round(ROCKET_VIDEO_SIZE[0] * PREVIEW_HEIGHT / ROCKET_VIDEO_SIZE[1]),
     PREVIEW_HEIGHT,
 )
+COMBINED_PREVIEW_SIZE = (
+    PLOT_PREVIEW_SIZE[0] + ROCKET_PREVIEW_SIZE[0],
+    PREVIEW_HEIGHT,
+)
 PREVIEW_FPS = 12
 
 
@@ -182,15 +186,25 @@ def render_videos(
     return plot_path, rocket_path
 
 
-def _write_gif_preview(
-    source: Path,
-    destination: Path,
-    size: tuple[int, int],
-    fps: int,
-) -> None:
-    width, height = size
+def render_gif_preview(
+    plot_video: str | Path,
+    rocket_video: str | Path,
+    *,
+    fps: int = PREVIEW_FPS,
+) -> Path:
+    """Create one synchronized, side-by-side GIF for the repository README."""
+    if fps <= 0:
+        raise ValueError("fps must be positive")
+    plot_path = Path(plot_video)
+    rocket_path = Path(rocket_video)
+    prefix = plot_path.stem.removesuffix("_dynamic_plot")
+    destination = plot_path.with_name(f"{prefix}_synchronized_preview.gif")
+    plot_width, plot_height = PLOT_PREVIEW_SIZE
+    rocket_width, rocket_height = ROCKET_PREVIEW_SIZE
     filters = (
-        f"[0:v]fps={fps},scale={width}:{height}:flags=lanczos,split[frames][palette_source];"
+        f"[0:v]fps={fps},scale={plot_width}:{plot_height}:flags=lanczos[plot];"
+        f"[1:v]fps={fps},scale={rocket_width}:{rocket_height}:flags=lanczos[rocket];"
+        "[plot][rocket]hstack=inputs=2:shortest=1,split[frames][palette_source];"
         "[palette_source]palettegen=max_colors=256:stats_mode=diff[palette];"
         "[frames][palette]paletteuse=dither=sierra2_4a:diff_mode=rectangle"
     )
@@ -201,7 +215,9 @@ def _write_gif_preview(
             "-loglevel",
             "warning",
             "-i",
-            str(source),
+            str(plot_path),
+            "-i",
+            str(rocket_path),
             "-filter_complex",
             filters,
             "-loop",
@@ -210,21 +226,4 @@ def _write_gif_preview(
         ],
         check=True,
     )
-
-
-def render_gif_previews(
-    plot_video: str | Path,
-    rocket_video: str | Path,
-    *,
-    fps: int = PREVIEW_FPS,
-) -> tuple[Path, Path]:
-    """Create sharp, equal-height GIF previews for the repository README."""
-    if fps <= 0:
-        raise ValueError("fps must be positive")
-    plot_path = Path(plot_video)
-    rocket_path = Path(rocket_video)
-    plot_preview = plot_path.with_name(f"{plot_path.stem}_preview.gif")
-    rocket_preview = rocket_path.with_name(f"{rocket_path.stem}_preview.gif")
-    _write_gif_preview(plot_path, plot_preview, PLOT_PREVIEW_SIZE, fps)
-    _write_gif_preview(rocket_path, rocket_preview, ROCKET_PREVIEW_SIZE, fps)
-    return plot_preview, rocket_preview
+    return destination

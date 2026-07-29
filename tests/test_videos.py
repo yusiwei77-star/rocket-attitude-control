@@ -5,10 +5,9 @@ from PIL import Image
 import pytest
 
 from rocket_attitude_control.video import (
-    PLOT_PREVIEW_SIZE,
+    COMBINED_PREVIEW_SIZE,
     PLOT_VIDEO_SIZE,
     PREVIEW_FPS,
-    ROCKET_PREVIEW_SIZE,
     ROCKET_VIDEO_SIZE,
 )
 
@@ -17,10 +16,7 @@ VIDEOS = [
     (Path("artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"), ROCKET_VIDEO_SIZE),
 ]
 
-PREVIEWS = [
-    (Path("artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif"), PLOT_PREVIEW_SIZE),
-    (Path("artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif"), ROCKET_PREVIEW_SIZE),
-]
+PREVIEW = Path("artifacts/demos/a2c_2460000_seed0_synchronized_preview.gif")
 
 
 @pytest.mark.parametrize(("path", "expected_size"), VIDEOS)
@@ -41,13 +37,9 @@ def test_published_video_metadata_and_frames(
     reader.close()
 
 
-@pytest.mark.parametrize(("path", "expected_size"), PREVIEWS)
-def test_readme_preview_metadata(
-    path: Path,
-    expected_size: tuple[int, int],
-) -> None:
-    with Image.open(path) as preview:
-        assert preview.size == expected_size
+def test_readme_preview_metadata() -> None:
+    with Image.open(PREVIEW) as preview:
+        assert preview.size == COMBINED_PREVIEW_SIZE
         frame_count = preview.n_frames
         assert frame_count == 131
         duration_seconds = sum(

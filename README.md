@@ -1,9 +1,9 @@
 # Rocket Attitude Control / 火箭姿态控制
 
 <p align="center">
-  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" width="54.656%" alt="Dynamic telemetry plot"></a><a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" width="45.344%" alt="Rocket attitude interface"></a>
+  <img src="artifacts/demos/a2c_2460000_seed0_synchronized_preview.gif" width="100%" alt="Synchronized dynamic telemetry and rocket attitude interface">
 </p>
-<p align="center"><sub>Dynamic telemetry / 动态遥测　·　Rocket attitude interface / 火箭姿态界面<br>Click either preview to open the full MP4 / 点击预览可打开完整 MP4</sub></p>
+<p align="center"><a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4">Dynamic telemetry MP4 / 动态遥测 MP4</a>　·　<a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4">Rocket attitude MP4 / 火箭姿态 MP4</a><br><sub>One shared animation timeline keeps both views synchronized / 单一动画时间轴确保两个画面同步</sub></p>
 
 [![CI](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml/badge.svg)](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -86,9 +86,9 @@ rocket-render \
   --output-dir artifacts/demos
 ```
 
-The command runs the policy once, then feeds the same sampled trajectory frames to both video renderers. The two MP4 files therefore have identical timing. It also creates sharp, equal-height GIF previews for the README; pass `--no-previews` to skip them.
+The command runs the policy once, then feeds the same sampled trajectory frames to both video renderers. The two MP4 files therefore have identical timing. It also combines both views into one sharp, side-by-side GIF with a shared animation clock; pass `--no-previews` to skip it.
 
-该命令只运行一次策略，再把同一组轨迹帧交给两个视频渲染器，因此两段 MP4 的时间轴完全一致。命令还会生成适合 README 展示的高清等高 GIF；如不需要，可传入 `--no-previews`。
+该命令只运行一次策略，再把同一组轨迹帧交给两个视频渲染器，因此两段 MP4 的时间轴完全一致。命令还会把两个画面合成为一张共享动画时钟的高清并排 GIF；如不需要，可传入 `--no-previews`。
 
 ### Train / 训练
 
