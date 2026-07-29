@@ -1,8 +1,8 @@
 # Rocket Attitude Control / 火箭姿态控制
 
 <p align="center">
-  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" width="45%" alt="Dynamic telemetry plot"></a>
-  <a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" width="50%" alt="Rocket attitude interface"></a>
+  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" height="300" alt="Dynamic telemetry plot"></a>
+  <a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" height="300" alt="Rocket attitude interface"></a>
 </p>
 <p align="center"><sub>Dynamic telemetry / 动态遥测　·　Rocket attitude interface / 火箭姿态界面<br>Click either preview to open the full MP4 / 点击预览可打开完整 MP4</sub></p>
 
