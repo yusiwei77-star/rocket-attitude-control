@@ -12,7 +12,11 @@ from rocket_attitude_control.rollout import (
     trajectory_metrics,
     write_json,
 )
-from rocket_attitude_control.video import render_videos
+from rocket_attitude_control.video import (
+    PREVIEW_FPS,
+    render_gif_previews,
+    render_videos,
+)
 
 
 def parser() -> argparse.ArgumentParser:
@@ -23,6 +27,8 @@ def parser() -> argparse.ArgumentParser:
     command.add_argument("--output-dir", type=Path, default=Path("artifacts/demos"))
     command.add_argument("--frames", type=int, default=327)
     command.add_argument("--fps", type=int, default=30)
+    command.add_argument("--preview-fps", type=int, default=PREVIEW_FPS)
+    command.add_argument("--no-previews", action="store_true")
     return command
 
 
@@ -37,6 +43,13 @@ def main() -> None:
         fps=args.fps,
         prefix=prefix,
     )
+    preview_paths = None
+    if not args.no_previews:
+        preview_paths = render_gif_previews(
+            plot_path,
+            rocket_path,
+            fps=args.preview_fps,
+        )
     result_dir = args.output_dir.parent / "results"
     result_dir.mkdir(parents=True, exist_ok=True)
     trajectory.save(result_dir / f"{prefix}_trajectory.npz")
@@ -51,7 +64,15 @@ def main() -> None:
         }
     )
     write_json(metrics, result_dir / f"{prefix}_summary.json")
-    print(json.dumps({"plot_video": str(plot_path), "rocket_video": str(rocket_path), **metrics}, indent=2))
+    outputs = {"plot_video": str(plot_path), "rocket_video": str(rocket_path)}
+    if preview_paths is not None:
+        outputs.update(
+            {
+                "plot_preview": str(preview_paths[0]),
+                "rocket_preview": str(preview_paths[1]),
+            }
+        )
+    print(json.dumps({**outputs, **metrics}, indent=2))
 
 
 if __name__ == "__main__":

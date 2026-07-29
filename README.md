@@ -1,7 +1,7 @@
 # Rocket Attitude Control / 火箭姿态控制
 
 <p align="center">
-  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" width="47.368%" alt="Dynamic telemetry plot"></a><a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" width="52.632%" alt="Rocket attitude interface"></a>
+  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" width="54.656%" alt="Dynamic telemetry plot"></a><a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" width="45.344%" alt="Rocket attitude interface"></a>
 </p>
 <p align="center"><sub>Dynamic telemetry / 动态遥测　·　Rocket attitude interface / 火箭姿态界面<br>Click either preview to open the full MP4 / 点击预览可打开完整 MP4</sub></p>
 
@@ -75,7 +75,7 @@ rocket-evaluate \
   --output artifacts/results/evaluation.json
 ```
 
-### Render both synchronized videos / 生成两段同步视频
+### Render synchronized videos and previews / 生成同步视频与预览
 
 ```bash
 rocket-render \
@@ -86,9 +86,9 @@ rocket-render \
   --output-dir artifacts/demos
 ```
 
-The command runs the policy once, then feeds the same sampled trajectory frames to both video renderers. The two MP4 files therefore have identical timing.
+The command runs the policy once, then feeds the same sampled trajectory frames to both video renderers. The two MP4 files therefore have identical timing. It also creates sharp, equal-height GIF previews for the README; pass `--no-previews` to skip them.
 
-该命令只运行一次策略，再把同一组轨迹帧交给两个视频渲染器，因此两段 MP4 的时间轴完全一致。
+该命令只运行一次策略，再把同一组轨迹帧交给两个视频渲染器，因此两段 MP4 的时间轴完全一致。命令还会生成适合 README 展示的高清等高 GIF；如不需要，可传入 `--no-previews`。
 
 ### Train / 训练
 

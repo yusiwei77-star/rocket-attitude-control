@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
 
 import imageio.v2 as imageio
+import imageio_ffmpeg
 import matplotlib
 import numpy as np
 
@@ -16,8 +18,27 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 
+PLOT_VIDEO_SIZE = (1800, 1120)
+ROCKET_VIDEO_SIZE = (PygameRenderer.width, PygameRenderer.height)
+PREVIEW_HEIGHT = 588
+PLOT_PREVIEW_SIZE = (
+    round(PLOT_VIDEO_SIZE[0] * PREVIEW_HEIGHT / PLOT_VIDEO_SIZE[1]),
+    PREVIEW_HEIGHT,
+)
+ROCKET_PREVIEW_SIZE = (
+    round(ROCKET_VIDEO_SIZE[0] * PREVIEW_HEIGHT / ROCKET_VIDEO_SIZE[1]),
+    PREVIEW_HEIGHT,
+)
+PREVIEW_FPS = 12
+
+
 def _plot_figure(trajectory: Trajectory):
-    figure, axes = plt.subplots(2, 2, figsize=(12, 10), dpi=100)
+    figure, axes = plt.subplots(
+        2,
+        2,
+        figsize=tuple(dimension / 100 for dimension in PLOT_VIDEO_SIZE),
+        dpi=100,
+    )
     figure.suptitle("Dynamic Plot of Variables over Time", fontsize=14, y=0.98)
     angle_axis, rate_axis, force_axis, fuel_axis = axes.flat
 
@@ -159,3 +180,51 @@ def render_videos(
     renderer.close()
     plt.close(artists[0])
     return plot_path, rocket_path
+
+
+def _write_gif_preview(
+    source: Path,
+    destination: Path,
+    size: tuple[int, int],
+    fps: int,
+) -> None:
+    width, height = size
+    filters = (
+        f"[0:v]fps={fps},scale={width}:{height}:flags=lanczos,split[frames][palette_source];"
+        "[palette_source]palettegen=max_colors=256:stats_mode=diff[palette];"
+        "[frames][palette]paletteuse=dither=sierra2_4a:diff_mode=rectangle"
+    )
+    subprocess.run(
+        [
+            imageio_ffmpeg.get_ffmpeg_exe(),
+            "-y",
+            "-loglevel",
+            "warning",
+            "-i",
+            str(source),
+            "-filter_complex",
+            filters,
+            "-loop",
+            "0",
+            str(destination),
+        ],
+        check=True,
+    )
+
+
+def render_gif_previews(
+    plot_video: str | Path,
+    rocket_video: str | Path,
+    *,
+    fps: int = PREVIEW_FPS,
+) -> tuple[Path, Path]:
+    """Create sharp, equal-height GIF previews for the repository README."""
+    if fps <= 0:
+        raise ValueError("fps must be positive")
+    plot_path = Path(plot_video)
+    rocket_path = Path(rocket_video)
+    plot_preview = plot_path.with_name(f"{plot_path.stem}_preview.gif")
+    rocket_preview = rocket_path.with_name(f"{rocket_path.stem}_preview.gif")
+    _write_gif_preview(plot_path, plot_preview, PLOT_PREVIEW_SIZE, fps)
+    _write_gif_preview(rocket_path, rocket_preview, ROCKET_PREVIEW_SIZE, fps)
+    return plot_preview, rocket_preview
