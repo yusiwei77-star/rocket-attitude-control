@@ -3,7 +3,7 @@
 <p align="center">
   <img src="artifacts/demos/a2c_2460000_seed0_synchronized_preview.gif" width="100%" alt="Synchronized dynamic telemetry and rocket attitude interface">
 </p>
-<p align="center"><a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4">Dynamic telemetry MP4 / 动态遥测 MP4</a>　·　<a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4">Rocket attitude MP4 / 火箭姿态 MP4</a><br><sub>One shared animation timeline keeps both views synchronized / 单一动画时间轴确保两个画面同步</sub></p>
+<p align="center"><a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4">Dynamic telemetry MP4 / 动态遥测 MP4</a>　·　<a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4">Rocket attitude MP4 / 火箭姿态 MP4</a></p>
 
 [![CI](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml/badge.svg)](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
