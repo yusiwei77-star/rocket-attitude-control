@@ -1,5 +1,11 @@
 # Rocket Attitude Control / 火箭姿态控制
 
+<p align="center">
+  <a href="artifacts/demos/a2c_2460000_seed0_dynamic_plot.mp4"><img src="artifacts/demos/a2c_2460000_seed0_dynamic_plot_preview.gif" width="49%" alt="Dynamic telemetry plot"></a>
+  <a href="artifacts/demos/a2c_2460000_seed0_rocket_ui.mp4"><img src="artifacts/demos/a2c_2460000_seed0_rocket_ui_preview.gif" width="49%" alt="Rocket attitude interface"></a>
+</p>
+<p align="center"><sub>Dynamic telemetry / 动态遥测　·　Rocket attitude interface / 火箭姿态界面<br>Click either preview to open the full MP4 / 点击预览可打开完整 MP4</sub></p>
+
 [![CI](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml/badge.svg)](https://github.com/yusiwei77-star/rocket-attitude-control/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
