@@ -1,0 +1,24 @@
+{
+  "seed": 0,
+  "score": 357.6546936035156,
+  "fuel_Ns": 37960.0,
+  "angle_rmse_deg": 0.6823291931521355,
+  "rate_rmse_deg_s": 0.06347285458755074,
+  "pass_70s_rate_constraint": true,
+  "pass_130s_final_constraint": true,
+  "final_angles_deg": [
+    -0.18320731587764666,
+    0.2778628109977607,
+    119.85234666863785
+  ],
+  "final_rates_deg_s": [
+    0.04341921395848001,
+    -0.043353531652926276,
+    0.6016749694455392
+  ],
+  "weight": "models/a2c_2460000.zip",
+  "algorithm": "A2C",
+  "video_frames": 327,
+  "video_fps": 30,
+  "video_duration_s": 10.9
+}
